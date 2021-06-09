@@ -1,9 +1,10 @@
-#ifndef HASH_MAP
-#define HASH_MAP
+#ifndef __HASH_MAP__
+#define __HASH_MAP__
 
 #include <unordered_map>
 #include <iostream>
 #include "memdbObject.h"
+using namespace std;
 template<typename k, typename v>
 class hash_map : public memdbObject {
 private:
@@ -43,7 +44,7 @@ public:
         std::cout<<"]"<<std::endl;
     };
     ~hash_map() {
-
+        cout<<"~hash_map"<<endl;
     };
 
     size_t size() {

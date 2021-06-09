@@ -1,9 +1,10 @@
-#ifndef RBTREE_MAP
-#define RBTREE_MAP
+#ifndef __RBTREE_MAP__
+#define __RBTREE_MAP__
 
 #include <map>
 #include <iostream>
 #include "memdbObject.h"
+using namespace std;
 template<typename k, typename v>
 class rbtree_map : public memdbObject {
 private:
@@ -37,7 +38,7 @@ public:
         std::cout<<"]"<<std::endl;
     };
     ~rbtree_map() {
-
+        cout<<"~rbtree_map"<<endl;
     };
 
     size_t size() {

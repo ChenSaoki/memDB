@@ -1,5 +1,5 @@
-#ifndef SKIPLIST
-#define SKIPLIST
+#ifndef __SKIPLIST__
+#define __SKIPLIST__
 
 #include <iostream> 
 #include <cstdlib>

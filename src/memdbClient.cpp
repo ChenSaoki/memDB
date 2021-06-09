@@ -1,5 +1,5 @@
-#ifndef MEMDBCLIENT
-#define MEMDBCLIENT
+#ifndef __MEMDBCLIENT__
+#define __MEMDBCLIENT__
 
 #include <iostream>
 #include <string.h>

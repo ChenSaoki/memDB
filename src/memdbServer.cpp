@@ -1,5 +1,5 @@
-#ifndef MEMDBSERVER
-#define MEMDBSERVER
+#ifndef __MEMDBSERVER__
+#define __MEMDBSERVER__
 
 #include <iostream>
 #include <string.h>
