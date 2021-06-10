@@ -21,14 +21,14 @@ struct memObject
         switch (type)
         {
         case HASH_TYPE:
-            delete dynamic_cast<hash_map<string,string>*>(ptr);
+            delete dynamic_cast<hash_map<m_string,m_string>*>(ptr);
             break;
         
         case RBTREE_TYPE:
-            delete dynamic_cast<rbtree_map<string,string>*>(ptr);
+            delete dynamic_cast<rbtree_map<m_string,m_string>*>(ptr);
             break;
         case SKIPLIST_TYPE:
-            delete dynamic_cast<skiplist<string,string>*>(ptr);
+            delete dynamic_cast<skiplist<m_string,m_string>*>(ptr);
             break;
         }
     }
