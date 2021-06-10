@@ -6,7 +6,7 @@
 #include "memdbObject.h"
 using namespace std;
 template<typename k, typename v>
-class rbtree_map : public memdbObject {
+class rbtree_map :public memdbObject {
 private:
     std::map<k,v> obj;
     VALUE_TYPE value_type;

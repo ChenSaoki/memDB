@@ -6,7 +6,7 @@
 #include "memdbObject.h"
 using namespace std;
 template<typename k, typename v>
-class hash_map : public memdbObject {
+class hash_map :public memdbObject {
 private:
     std::unordered_map<k,v> obj;
     VALUE_TYPE value_type;

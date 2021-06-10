@@ -76,7 +76,7 @@ void Node<K, V>::set_value(V value) {
 
 // Class template for Skip list
 template <typename K, typename V> 
-class skiplist : public memdbObject {
+class skiplist :public  memdbObject {
 private:
     VALUE_TYPE type;
 public: 
