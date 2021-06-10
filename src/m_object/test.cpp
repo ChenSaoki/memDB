@@ -5,14 +5,20 @@
 #include "container.h"
 using namespace std;
 
-void print(string s) {
-
-    cout<<s<<endl;
-}
 
 int main() {
 
-    Object *a = new m_string();
+    //fun();
+    unordered_map<string,memObject> db;
+    auto a = new SkipList<string,string>(18);
+
+    db["name"] = memObject(STRING_TYPE, a);
+
+    //auto *ss = dynamic_cast<SkipList<string,string>*>(db["name"].ptr);
+
+    a->insert_element("csj","csj");
+    a->display_list();
+
     return 0;
 }
 

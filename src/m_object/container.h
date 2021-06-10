@@ -5,10 +5,15 @@
 #include <set>
 #include <unordered_map>
 #include <cstring>
+
 #include "Object.cpp"
+#include "memObject.cpp"
 #include "m_string.cpp"
 #include "skiplist.cpp"
-#include "../other/memdb_flag.h"
+
+#include "../other/memdb_flag.cpp"
+
+
 using namespace std;
 
 #endif

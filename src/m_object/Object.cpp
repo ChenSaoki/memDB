@@ -7,12 +7,14 @@ class Object
 {
 
 public:
-    Object(){
-        std::cout<<"构造 object"<<std::endl;
+    Object()
+    {
+        std::cout << "构造 object" << std::endl;
     };
-    virtual ~Object(){
+    virtual ~Object()
+    {
 
-        std::cout<<"析构 object"<<std::endl;
+        std::cout << "析构 object" << std::endl;
     };
 };
 #endif
