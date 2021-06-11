@@ -4,11 +4,10 @@
 using namespace std;
 
 int main() {
-    vector<string> ref;
-    commandTool::Stringsplit("  add   key  val   ",' ',ref);
-    for(const auto& str : ref) cout<<str<<endl;
     memdb db;
-    db.insert_string("h1","csj");
-    
+    db.insert_string("n1","csj");
+    string res;
+    db.getStringforkey(res,"n1");
+    cout<<res<<endl;
     return 0;
 }

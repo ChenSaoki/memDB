@@ -2,7 +2,7 @@
 #define __MEMDBSERVER__
 
 #include <iostream>
-#include <string.h>
+#include <cstring>
 #include <random>
 #include <time.h>
 #include <sys/socket.h>
@@ -16,12 +16,18 @@
 #include <sys/epoll.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "memdb.cpp"
+#include "commandTool.cpp"
+
 using namespace std;
 
 int sockfd = -1;
 int epfd = -1;
 list<int> FullConnQueue;
 list<int> SemiConnQueue;
+memdb db;
+
+
 int startup(int port);
 int handleConnection(int sockfd);
 
@@ -109,7 +115,23 @@ int handleCommand( ) {
 				int ref = recv( events[i].data.fd,buf,len,0);
 				buf[ref] = '\0';
 				cout<<buf<<endl;
-				send(events[i].data.fd,"ok\0",strlen("ok"),0);
+				string res;
+				vector<string> cmds;
+				commandTool::Stringsplit(buf,' ',cmds);
+				if(cmds[0] == "add" && cmds.size() >= 3) {
+					db.insert_string(cmds[1],cmds[2]);
+					res = string("ok!");
+				} else if(cmds[0] == "get" && cmds.size() >= 2){
+					db.getStringforkey(res,cmds[1]);
+				} else if(cmds[0] == "del" && cmds.size() >= 2) {
+					db.delete_key(cmds[1]);
+					res = string("ok!");
+				} else {
+					res = string("命令错误\0");
+				}
+				
+				send(events[i].data.fd,const_cast<char*>(res.data()),res.size(),0);
+				res = "";
 				if(ref == 0) {
 					close(events[i].data.fd);
 					epoll_ctl(epfd,EPOLL_CTL_DEL,events[i].data.fd,&ev);

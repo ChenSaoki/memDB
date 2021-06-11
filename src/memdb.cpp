@@ -36,8 +36,9 @@ public:
     {
         if (db.find(key) == db.end())
         {
-            buf = "null\0";
+            buf = string("null\0");
             //return -1;
+            return;
         }
         buf = dynamic_cast<m_string *>(db[key])->buf;
     }
