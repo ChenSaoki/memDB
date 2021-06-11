@@ -7,12 +7,12 @@
 #include <cstring>
 
 #include "Object.cpp"
-#include "memObject.cpp"
+//#include "memObject.cpp"
 #include "m_string.cpp"
 #include "skiplist.cpp"
 
 #include "../other/memdb_flag.cpp"
-
+class m_string;
 
 using namespace std;
 
