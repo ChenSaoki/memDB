@@ -1,7 +1,11 @@
-all: clean server
+all: clean server client
 
 server: 
-	g++ -W -Wall -o server memdbServer.cpp -lpthread
+	g++ -W -Wall -o server ./src/memdbServer.cpp -lpthread
+
+client:
+	g++ -W -Wall -o client ./src/memdbClient.cpp -lpthread
 
 clean:
 	rm server
+	rm client

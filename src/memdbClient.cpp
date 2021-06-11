@@ -86,13 +86,19 @@ int memdbClient::ping() {
 
 #endif
 
-int main()
+int main(int argc , char *argv[])
 {
     memdbClient client;
-    client.connection("10.211.55.3",1736);
+    if(argc == 2) {
+        cout<<argv[0]<<endl;
+        client.connection(argv[0],1736);
+    } else {
+        client.connection("0.0.0.0",1736);
+    }
     char buf[BUFSIZ];
     while(1) {
         cin.getline(buf,BUFSIZ-1);
+        if(strlen(buf) < 1)continue;
         client.sendCommand(buf);
         int ref = recv(client.serverfd,buf,BUFSIZ,0);
         buf[ref] = '\0';
