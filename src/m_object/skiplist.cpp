@@ -96,7 +96,7 @@ public:
     int get_random_level();
     Node<K, V> *create_node(K, V, int);
     int insert_element(K, V);
-    void display_list();
+    void display_list(string&);
     bool search_element(K);
     void delete_element(K);
     void dump_file();
@@ -225,7 +225,7 @@ int SkipList<K, V>::insert_element(const K key, const V value)
 
 // Display skip list
 template <typename K, typename V>
-void SkipList<K, V>::display_list()
+void SkipList<K, V>::display_list(string& buf)
 {
 
     std::cout << "\n*****Skip List*****"
@@ -236,6 +236,7 @@ void SkipList<K, V>::display_list()
         std::cout << "Level " << i << ": ";
         while (node != NULL)
         {
+            buf += node->get_value() + " ";
             std::cout << node->get_key() << ":" << node->get_value() << ";";
             node = node->forward[i];
         }

@@ -126,6 +126,14 @@ int handleCommand( ) {
 				} else if(cmds[0] == "del" && cmds.size() >= 2) {
 					db.delete_key(cmds[1]);
 					res = string("ok!");
+				} else if(cmds[0] == "zadd" && cmds.size() >= 4) {
+					db.insert_skiplist(cmds[1],cmds[2],cmds[3]);
+					res = string("ok!");
+				} else if(cmds[0] == "zget" && cmds.size() >= 2){
+					db.getElementforSkiplist(res,cmds[1]);
+				} else if(cmds[0] == "zdel" && cmds.size() >= 3) {
+					db.delElementforSkiplist(res,cmds[1],cmds[2]);
+					
 				} else {
 					res = string("命令错误\0");
 				}
