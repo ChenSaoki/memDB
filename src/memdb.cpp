@@ -58,6 +58,10 @@ void memdb::getStringforkey(string &buf, string key)
         //return -1;
         return;
     }
+    if(db[key]->type != STRING_TYPE) {
+            buf = string("key is not a string");
+            return ;
+    }
     buf = dynamic_cast<m_string *>(db[key])->buf;
 }
 
