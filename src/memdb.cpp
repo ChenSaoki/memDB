@@ -1,16 +1,17 @@
 #ifndef __MEMDB__
 #define __MEMDB__
 #include "./m_object/container.h"
+#include <memory>
 using namespace std;
 
 class memdb
 {
 public:
-    unordered_map<string, Object *> db;
+    unordered_map<string, shared_ptr<Object>> db;
 
 public:
-    memdb(/* args */);
-    ~memdb();
+    memdb() = default;
+    ~memdb() = default;
 
     void insert_string(string key, string val);    //插入string，存在即覆盖
     void delete_key(string key);                   //删除db key
@@ -18,94 +19,101 @@ public:
     void insert_skiplist(string key, string score, string member);
     void getElementforSkiplist(string &buf, string key);
     void delElementforSkiplist(string &buf, string key, string score);
+    bool isExist(const string &key);
+    bool isType(const string &key, int type);
 };
-
-memdb::memdb(/* args */)
+bool memdb::isExist(const string &key)
 {
+    return db.find(key) != db.end();
 }
-memdb::~memdb()
+
+bool memdb::isType(const string &key, int type)
 {
-    for (const auto &obj : db)
-    {
-        delete obj.second;
-    }
+    return isExist(key) && db[key]->type == type;
 }
 
 void memdb::insert_string(string key, string val) //插入string，存在即覆盖
 {
-    if (db.find(key) != db.end())
+    if (isExist(key))
     {
-        delete db[key];
         db.erase(key);
     }
-    db[key] = new m_string(val);
+    db[key] = make_shared<m_string>(val);
     db[key]->type = STRING_TYPE;
 }
 
 void memdb::delete_key(string key) //删除db key
 {
-    if (db.find(key) != db.end())
+    if (isExist(key))
     {
-        delete db[key];
         db.erase(key);
     }
 }
 void memdb::getStringforkey(string &buf, string key)
 {
-    if (db.find(key) == db.end())
+    if (!isExist(key))
     {
-        buf = string("null\0");
-        //return -1;
+        buf = string("null");
         return;
     }
-    if(db[key]->type != STRING_TYPE) {
-            buf = string("key is not a string");
-            return ;
+    if (!isType(key, STRING_TYPE))
+    {
+        buf = string("key is not a string");
+        return;
     }
-    buf = dynamic_cast<m_string *>(db[key])->buf;
+    buf = dynamic_cast<m_string *>(db[key].get())->buf;
 }
 
 void memdb::insert_skiplist(string key, string score, string member)
 {
-    if (db.find(key) != db.end() && db[key]->type != SKIPLIST_TYPE)
+    if (isExist(key) && !isType(key, SKIPLIST_TYPE))
     {
-        delete db[key];
         db.erase(key);
     }
-    if (db.find(key) == db.end())
+    if (!isExist(key))
     {
-        db[key] = new SkipList<string, string>(18);
+        db[key] = make_shared<SkipList<string, string>>(18);
         db[key]->type = SKIPLIST_TYPE;
     }
-    dynamic_cast<SkipList<string, string> *>(db[key])->insert_element(score, member);
+    dynamic_cast<SkipList<string, string> *>(db[key].get())->insert_element(score, member);
 }
 
 void memdb::getElementforSkiplist(string &buf, string key)
 {
-    if (db.find(key) == db.end())
+    if (!isExist(key))
     {
-        buf = string("null\0");
+        buf = string("null");
         return;
     }
-    auto obj = dynamic_cast<SkipList<string, string> *>(db[key]);
+    if (!isType(key, SKIPLIST_TYPE))
+    {
+        buf = string("key is not a SkipList");
+        return;
+    }
+    auto obj = dynamic_cast<SkipList<string, string> *>(db[key].get());
     obj->display_list(buf);
 }
 
 void memdb::delElementforSkiplist(string &buf, string key, string score)
 {
-    if (db.find(key) == db.end())
+    if (!isExist(key))
     {
-        buf = string("no find skiplist!!\0");
+        buf = string("no find skiplist");
         return;
     }
-    auto obj = dynamic_cast<SkipList<string, string> *>(db[key]);
+    if (!isType(key, SKIPLIST_TYPE))
+    {
+        buf = string("key is not a SkipList");
+        return;
+    }
+    auto obj = dynamic_cast<SkipList<string, string> *>(db[key].get());
     if (obj->search_element(score))
     {
         obj->delete_element(score);
-        buf = string("ok!\0");
+        buf = string("ok!");
         return;
     }
-    buf = string("no find element!\0");
+    buf = string("no find element");
 }
 
 #endif

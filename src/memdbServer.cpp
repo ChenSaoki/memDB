@@ -135,7 +135,7 @@ int handleCommand( ) {
 					db.delElementforSkiplist(res,cmds[1],cmds[2]);
 					
 				} else {
-					res = string("命令错误\0");
+					res = string("命令错误");
 				}
 				
 				send(events[i].data.fd,const_cast<char*>(res.data()),res.size(),0);

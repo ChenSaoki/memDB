@@ -7,5 +7,5 @@ client:
 	g++ -W -Wall -o client ./src/memdbClient.cpp -lpthread
 
 clean:
-	rm server
-	rm client
+	rm -f server
+	rm -f client
