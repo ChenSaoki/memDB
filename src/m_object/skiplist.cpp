@@ -1,11 +1,3 @@
-/* ************************************************************************
-> File Name:     skiplist.h
-> Author:        程序员Carl
-> 微信公众号:    代码随想录
-> Created Time:  Sun Dec  2 19:04:26 2018
-> Description:   
- ************************************************************************/
-
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
@@ -462,4 +454,4 @@ int SkipList<K, V>::get_random_level()
     k = (k < _max_level) ? k : _max_level;
     return k;
 };
-// vim: et tw=100 ts=4 sw=4 cc=120
+
